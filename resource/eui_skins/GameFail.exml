@@ -4,7 +4,7 @@
 	<e:Image source="fail_bgc_png" width="440" height="440" horizontalCenter="0" verticalCenter="0"/>
 	<e:Label text="继续游戏？" y="422" size="72" textColor="0x515151" textAlign="center" verticalAlign="middle" bold="true" horizontalCenter="0"/>
 	<e:Group id="gp_share" width="400" height="108" y="600" anchorOffsetX="0" horizontalCenter="0">
-		<e:Button label="" top="0" bottom="0" left="0" right="0" width="380">
+		<e:Button id="share_btn" label="" top="0" bottom="0" left="0" right="0" width="380">
 			<e:skinName>
 				<e:Skin states="up,down,disabled">
 				<e:Image width="100%" height="100%" source="rank_png"/>
@@ -12,8 +12,8 @@
 				</e:Skin>
 			</e:skinName>
 		</e:Button>
-		<e:Image width="50" height="50" source="share_png" verticalCenter="0" x="20"/>
-		<e:Label text="群分享复活" size="50" verticalAlign="middle" textAlign="center" x="88" top="0" bottom="0"/>
+		<e:Image id="share_icon" width="50" height="50" source="share_png" verticalCenter="0" x="20"/>
+		<e:Label id="share_label" text="群分享复活" size="50" verticalAlign="middle" textAlign="center" x="88" top="0" bottom="0"/>
 	</e:Group>
 	<e:Image id="game_close_replay" source="close_png" y="800" horizontalCenter="0" width="80" height="80"/>
 	<e:Rect height="160" left="0" right="0" bottom="0" fillColor="0xd8d8d8"/>

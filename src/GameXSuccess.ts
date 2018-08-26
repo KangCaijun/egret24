@@ -13,7 +13,6 @@ class GameSuccess extends egret.DisplayObjectContainer {
     private roundLabel:egret.TextField = new egret.TextField()
     constructor (x, y, round, screenWidth) {
         super()
-        DisUtil.get(this).beCon()
         this.initCircle(x, y)
         this.initText(round, screenWidth)
     }
