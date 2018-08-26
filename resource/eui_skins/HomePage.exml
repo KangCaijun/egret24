@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Image source="homebgc_png" left="0" right="0" top="0" bottom="0" visible="false"/>
+	<e:Label text="24 点" horizontalCenter="0" anchorOffsetX="0" anchorOffsetY="0" height="120" size="108" width="300" fontFamily="Times" y="186" textAlign="center" textColor="0x000000"/>
+	<e:Button label="" enabled="true" verticalCenter="-36" height="128" width="400" horizontalCenter="0" scaleX="1">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="xia_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Label id="game_x" text="侠模式" y="466" anchorOffsetX="0" width="400" anchorOffsetY="0" height="120" size="56" horizontalCenter="0" verticalAlign="middle" textAlign="center"/>
+	<e:Button label="" enabled="true" height="128" width="400" horizontalCenter="0" y="666">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="chan_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Label id="game_c" text="禅模式" y="666" anchorOffsetX="0" width="400" anchorOffsetY="0" height="120" size="56" verticalAlign="middle" textAlign="center" horizontalCenter="0.5"/>
+	<e:Button label="" enabled="true" height="128" width="400" horizontalCenter="0" y="866">
+		<e:skinName>
+			<e:Skin states="up,down,disabled">
+			<e:Image width="100%" height="100%" source="rank_png"/>
+			<e:Label id="labelDisplay" horizontalCenter="0" verticalCenter="0"/>
+			</e:Skin>
+		</e:skinName>
+	</e:Button>
+	<e:Label id="game_p" text="排行榜" y="866" anchorOffsetX="0" width="400" anchorOffsetY="0" height="120" size="64" horizontalCenter="0" verticalAlign="middle" textAlign="center"/>
+	<w:Config id="1652ca795ff"/>
+</e:Skin>

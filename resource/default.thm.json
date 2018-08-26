@@ -1,0 +1,12 @@
+{
+	"skins": {},
+	"autoGenerateExmlsList": true,
+	"exmls": [
+		"resource/eui_skins/GameC.exml",
+		"resource/eui_skins/GameFail.exml",
+		"resource/eui_skins/GameOver.exml",
+		"resource/eui_skins/GameX.exml",
+		"resource/eui_skins/HomePage.exml"
+	],
+	"path": "resource/default.thm.json"
+}

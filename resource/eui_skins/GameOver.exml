@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<e:Skin width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
+	<e:Rect left="1" right="-1" top="0" bottom="0" fillColor="0x05b2df" anchorOffsetY="0" height="1136"/>
+	<e:Label text="游戏结束" y="188.18" size="80" textAlign="center" verticalAlign="middle" horizontalCenter="0" bold="true"/>
+	<e:Image id="go_home" source="back_png" x="62.06" y="70.15"/>
+	<e:Group width="200" height="64" y="340" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0">
+		<e:Label text="分数" top="0" bottom="0" verticalAlign="middle" textAlign="center" size="36" textColor="0x515151" bold="true" horizontalCenter="0"/>
+		<e:Rect width="40" height="8" fillColor="0x515151" verticalCenter="0" right="0"/>
+		<e:Rect width="40" height="8" fillColor="0x515151" left="0" verticalCenter="0"/>
+	</e:Group>
+	<e:Label id="final_score" text="0" y="422" height="72" size="72" verticalAlign="middle" textAlign="center" horizontalCenter="0"/>
+	<e:Group width="280" height="64" y="580" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0">
+		<e:Label text="好友排行" top="0" bottom="0" verticalAlign="middle" textAlign="center" size="36" textColor="0x515151" bold="true" horizontalCenter="0"/>
+		<e:Rect width="40" height="8" fillColor="0x515151" verticalCenter="0" right="0"/>
+		<e:Rect width="40" height="8" fillColor="0x515151" left="0" verticalCenter="0"/>
+	</e:Group>
+	<e:Group width="360" height="100" y="680" horizontalCenter="0">
+		<e:Image width="80" height="80" horizontalCenter="0" verticalCenter="0" source="normal_png"/>
+		<e:Image width="70" height="70" left="0" verticalCenter="0" source="normal_png"/>
+		<e:Image width="70" height="70" right="0" verticalCenter="0" source="normal_png"/>
+	</e:Group>
+	<e:Label id="total_rank" text="查看所有排行" size="28" verticalAlign="middle" textAlign="center" verticalCenter="312" horizontalCenter="0"/>
+	<e:Group width="220" height="72" x="40" y="950">
+		<e:Image source="restartgame_png" left="0" right="0" top="0" bottom="0"/>
+		<e:Label id="new_gameX" text="再玩一次" left="0" right="0" top="0" bottom="0" verticalAlign="middle" textAlign="center"/>
+	</e:Group>
+	<e:Group width="220" height="72" y="950" x="380">
+		<e:Image left="0" right="0" top="0" bottom="0" source="gameover_png"/>
+		<e:Label id="game_share" text="分享战绩" left="0" right="0" top="0" bottom="0" verticalAlign="middle" textAlign="center"/>
+	</e:Group>
+</e:Skin>
