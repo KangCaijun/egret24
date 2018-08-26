@@ -29,7 +29,7 @@ class ShowRank extends eui.Component {
 
         // 添加删除按钮
         this.closeBtn = new eui.Label()
-        this.closeBtn.size = self.height / 20
+        this.closeBtn.size = self.height / 40
         this.closeBtn.textAlign = egret.HorizontalAlign.CENTER
         this.closeBtn.textColor = 0x00ff00
         this.closeBtn.lineSpacing = 6
