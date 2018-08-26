@@ -30,47 +30,56 @@ class HomePage extends eui.Component {
         this.$parent.removeChild(this)
     }
 
-    private maskShp:egret.Shape
-    private rankList:egret.Bitmap
-    private closeBtn:eui.Label
-    private goToGameP () {
-        // 禁止点击
-        this.touchChildren = false
-        // mask
-        this.maskShp = new egret.Shape()
-        this.maskShp.graphics.beginFill(0x000000, 0.6)
-        this.maskShp.graphics.drawRect(0, 0, this.stage.stageWidth, this.stage.stageHeight)
-        this.maskShp.graphics.endFill()
-        this.$parent.addChildAt(this.maskShp, this.$parent.numChildren + 1)
-
-        // 添加排行榜
-        this.rankList = platform.openDataContext.createDisplayObject(null, this.stage.stageWidth, this.stage.stageHeight)
-        this.$parent.addChildAt(this.rankList, this.$parent.numChildren + 1)
-        platform.openDataContext.postMessage({
-            command: 'open'
-        })
-
-        // 添加删除按钮
-        this.closeBtn = new eui.Label()
-        this.closeBtn.size = this.$parent.height / 20
-        this.closeBtn.textAlign = egret.HorizontalAlign.CENTER
-        this.closeBtn.textColor = 0x00ff00
-        this.closeBtn.lineSpacing = 6
-        this.closeBtn.text = '点击关闭'
-        this.closeBtn.x = this.$parent.stage.stageWidth/2 - this.closeBtn.width/2
-        this.closeBtn.y = this.$parent.stage.stageHeight * 37 / 40
-        this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.handleClose, this)
-        this.$parent.addChildAt(this.closeBtn, this.$parent.numChildren + 1)
-    }
-
-    private handleClose () {
-        console.log('被点击了')
-        this.$parent.removeChild(this.closeBtn)
-        this.$parent.removeChild(this.maskShp)
-        platform.openDataContext.postMessage({
-            command: 'close'
-        })
-        this.$parent.removeChild(this.rankList)
-        this.touchChildren = true
+    private goToGameP () {     
+        this.$parent.addChild(new ShowRank(this))
     }
 }
+
+
+// class ShowRank {
+//     private maskShp:egret.Shape
+//     private rankList:egret.Bitmap
+//     private closeBtn:eui.Label
+//     constructor (self) {
+//         this.showRank(self)
+//     }
+//     public showRank (self) {
+//         // 禁止点击
+//         this.touchChildren = false
+//         // mask
+//         this.maskShp = new egret.Shape()
+//         this.maskShp.graphics.beginFill(0x000000, 0.6)
+//         this.maskShp.graphics.drawRect(0, 0, this.stage.stageWidth, this.stage.stageHeight)
+//         this.maskShp.graphics.endFill()
+//         this.$parent.addChildAt(this.maskShp, this.$parent.numChildren + 1)
+
+//         // 添加排行榜
+//         this.rankList = platform.openDataContext.createDisplayObject(null, this.stage.stageWidth, this.stage.stageHeight)
+//         this.$parent.addChildAt(this.rankList, this.$parent.numChildren + 1)
+//         platform.openDataContext.postMessage({
+//             command: 'open'
+//         })
+
+//         // 添加删除按钮
+//         this.closeBtn = new eui.Label()
+//         this.closeBtn.size = this.$parent.height / 20
+//         this.closeBtn.textAlign = egret.HorizontalAlign.CENTER
+//         this.closeBtn.textColor = 0x00ff00
+//         this.closeBtn.lineSpacing = 6
+//         this.closeBtn.text = '点击关闭'
+//         this.closeBtn.x = this.$parent.stage.stageWidth/2 - this.closeBtn.width/2
+//         this.closeBtn.y = this.$parent.stage.stageHeight * 37 / 40
+//         this.closeBtn.addEventListener(egret.TouchEvent.TOUCH_TAP, this.handleClose, this)
+//         this.$parent.addChildAt(this.closeBtn, this.$parent.numChildren + 1)
+//     }
+
+//     private handleClose () {
+//         this.$parent.removeChild(this.closeBtn)
+//         this.$parent.removeChild(this.maskShp)
+//         platform.openDataContext.postMessage({
+//             command: 'close'
+//         })
+//         this.$parent.removeChild(this.rankList)
+//         this.touchChildren = true
+//     }
+// }
