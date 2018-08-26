@@ -57,49 +57,29 @@ class Main extends eui.UILayer {
     }
 
     private async runGame() {
+        await platform.openDataContext.postMessage({
+            command: 'loadRes'
+        })
+
         await this.loadResource()
         this.createGameScene();
         // const result = await RES.getResAsync("description_json")
         // this.startAnimation(result);
         await platform.login().then((res) => {
+            console.log(res)
             egret.localStorage.setItem('openId', res)
         });
         // const userInfo = await platform.getUserInfo();
 
-        await platform.getUserInfo()
-        
-        // let KVDdataList = [{
-        //     key: '',
-        //     value: ''
-        // }]
-        // KVDdataList[0].key = 'test'
-        // KVDdataList[0].value = JSON.stringify({
-        //     "wxgame": {
-        //         "score": 16,
-        //         "time": 14
-        //     },
-        //     "update_time": 16
-        // })
-
-        // await platform.setUserCloudStorage(KVDdataList)
-        
-
-        this.bitmap = platform.openDataContext.createDisplayObject(null, this.stage.stageWidth, this.stage.stageHeight)
-        
-        platform.openDataContext.postMessage({
-            command: 'loadRes'
-        })
-
-        // platform.openDataContext.postMessage({
-        //     command: 'open'
-        // })     
+        await platform.getUserInfo().then((res) => {
+            console.log(res)
+            // let KVDataList = [{key: 'maxScore', value: '0'}]
+            // platform.setUserCloudStorage(KVDataList)
+        })   
 
         await platform.showShareMenu()
-
     }
  
-    private bitmap
-
     private async loadResource() {
         try {
             const loadingView = new LoadingUI();

@@ -15,7 +15,7 @@ declare interface Platform {
 
     shareAppMessage(): Promise<any>
 
-    // setUserCloudStorage(score:any, openId:any): Promise<any>
+    setUserCloudStorage(score:any): Promise<any>
 
     openDataContext
 }
@@ -33,9 +33,9 @@ class DebugPlatform implements Platform {
     async shareAppMessage () {
 
     }
-    // async setUserCloudStorage(score:any, openId:any) {
+    async setUserCloudStorage(score:any) {
 
-    // }
+    }
 
     openDataContext
 }
