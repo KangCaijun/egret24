@@ -28,21 +28,11 @@ class GameOver extends eui.Component {
         this.game_share.addEventListener(egret.TouchEvent.TOUCH_TAP, this.share, this)
         this.total_rank.addEventListener(egret.TouchEvent.TOUCH_TAP, this.showTotalRank, this)
 
-        // console.log(this.width);
-        // console.log(this.$parent);
-        // console.log(this);
-        // console.log(this.$parent);
-        
-        
-        // console.log(this.$parent.width);
-        // console.log(this.stage);
-        
-
         this.the_best.addChild(platform.openDataContext.createDisplayObject(null, this.the_best.width, this.the_best.height))
         platform.openDataContext.postMessage({
             avatarWidth: this.width,
             avatarHeight: this.height,
-            command: 'drawAvator'
+            command: 'drawAvatar'
         })
     }
 
@@ -65,6 +55,10 @@ class GameOver extends eui.Component {
     }
 
     private showTotalRank () {
-        this.$parent.addChild(new ShowRank(this))    
+        platform.openDataContext.postMessage({
+            command: 'close'
+        }).then(() => {
+             this.$parent.addChild(new ShowRank(this, true))   
+        })
     }
 }

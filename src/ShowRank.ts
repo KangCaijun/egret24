@@ -2,9 +2,13 @@ class ShowRank extends eui.Component {
     private maskShp:egret.Shape
     private rankList:egret.Bitmap
     private closeBtn:eui.Label
-    constructor (self) {
+    private smallRank:boolean
+    constructor (self, smallRank?:boolean) {
         super()
         this.showRank(self)
+        if (smallRank) {
+            this.smallRank = smallRank
+        }
     }
     public showRank (self) {
         // 禁止点击
@@ -46,6 +50,11 @@ class ShowRank extends eui.Component {
         })
         self.$parent.removeChild(this.rankList)
         self.$parent.removeChild(this)
+        if (this.smallRank) {
+            platform.openDataContext.postMessage({
+                command: 'drawAvatar'
+            })
+        }
         self.touchChildren = true
     }
 }
