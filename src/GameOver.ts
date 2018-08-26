@@ -38,10 +38,10 @@ class GameOver extends eui.Component {
         // console.log(this.stage);
         
 
-        this.addChild(platform.openDataContext.createDisplayObject(null, this.width, this.height))
+        this.the_best.addChild(platform.openDataContext.createDisplayObject(null, this.the_best.width, this.the_best.height))
         platform.openDataContext.postMessage({
-            avatorWidth: this.width,
-            avatorHeight: this.height,
+            avatarWidth: this.width,
+            avatarHeight: this.height,
             command: 'drawAvator'
         })
     }

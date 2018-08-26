@@ -14,10 +14,7 @@
 		<e:Rect width="40" height="8" fillColor="0x515151" verticalCenter="0" right="0"/>
 		<e:Rect width="40" height="8" fillColor="0x515151" left="0" verticalCenter="0"/>
 	</e:Group>
-	<e:Group width="360" height="100" y="680" horizontalCenter="0">
-		<e:Image width="80" height="80" horizontalCenter="0" verticalCenter="0" source="normal_png"/>
-		<e:Image width="70" height="70" left="0" verticalCenter="0" source="normal_png"/>
-		<e:Image width="70" height="70" right="0" verticalCenter="0" source="normal_png"/>
+	<e:Group id="the_best" width="420" height="140" y="670" horizontalCenter="0">
 	</e:Group>
 	<e:Label id="total_rank" text="查看所有排行" size="28" verticalAlign="middle" textAlign="center" verticalCenter="312" horizontalCenter="0"/>
 	<e:Group width="220" height="72" x="40" y="950">
