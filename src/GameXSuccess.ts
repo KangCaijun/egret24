@@ -74,9 +74,17 @@ class GameSuccess extends egret.DisplayObjectContainer {
 
     //放大的动画效果
     public scaleToFull () {
-        this.addEventListener(egret.Event.ENTER_FRAME, (evt:egret.Event) => {
-            this.r = this.r + 60
+        let timeId = setInterval(() => {
+             this.r = this.r + 42
             this.drawCircle(this.r)
-        }, this)
+            if (this.r > 1020) {
+                clearInterval(timeId)
+            }
+        }, 16.7)
+        
+        // this.addEventListener(egret.Event.ENTER_FRAME, (evt:egret.Event) => {
+        //     this.r = this.r + 60
+        //     this.drawCircle(this.r)
+        // }, this)
     }
 }

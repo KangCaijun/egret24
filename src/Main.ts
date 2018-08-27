@@ -31,6 +31,9 @@ class Main extends eui.UILayer {
 
     protected createChildren(): void {
         super.createChildren();
+        platform.openDataContext.postMessage({
+            command: 'loadRes'
+        })
 
         egret.lifecycle.addLifecycleListener((context) => {
             // custom lifecycle plugin
@@ -57,22 +60,22 @@ class Main extends eui.UILayer {
     }
 
     private async runGame() {
-        await platform.openDataContext.postMessage({
-            command: 'loadRes'
-        })
+        // await platform.openDataContext.postMessage({
+        //     command: 'loadRes'
+        // })
 
         await this.loadResource()
         this.createGameScene();
         // const result = await RES.getResAsync("description_json")
         // this.startAnimation(result);
         await platform.login().then((res) => {
-            console.log(res)
+            // console.log(res)
             egret.localStorage.setItem('openId', res)
         });
         // const userInfo = await platform.getUserInfo();
 
         await platform.getUserInfo().then((res) => {
-            console.log(res)
+            // console.log(res)
             // let KVDataList = [{key: 'maxScore', value: '0'}]
             // platform.setUserCloudStorage(KVDataList)
         })   

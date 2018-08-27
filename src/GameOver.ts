@@ -18,6 +18,13 @@ class GameOver extends eui.Component {
 
         DisUtil.get(this).beCon()
 
+        let rect = new egret.Shape()
+        rect.graphics.beginFill(0x05B2DF)
+        rect.graphics.drawRect(0, 0, self.$parent.width, self.$parent.height)
+        rect.graphics.endFill()
+        this.addChildAt(rect, 0)
+        DisUtil.get(rect).cover()
+
         this.final_score.text = finalScore
 
         this.go_home.addEventListener(egret.TouchEvent.TOUCH_TAP, this.goHome, this)

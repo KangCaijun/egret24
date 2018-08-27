@@ -53,11 +53,12 @@ class Game extends eui.Component {
     // 计时器部分 =============p判断2====================
     private c_game_time:eui.Label
     private timeNum = 0
+    private timer
     private setTimeC() {
-        let timer:egret.Timer = new egret.Timer(1000, 0)
-        timer.addEventListener(egret.TimerEvent.TIMER, this.timerFuncC, this)
-        timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.timerComFuncC, this)
-        timer.start()
+        this.timer = new egret.Timer(1000, 0)
+        this.timer.addEventListener(egret.TimerEvent.TIMER, this.timerFuncC, this)
+        this.timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.timerComFuncC, this)
+        this.timer.start()
     }
 
     private timerFuncC () {
@@ -135,9 +136,11 @@ class Game extends eui.Component {
         // e.$target.enabled = false
         // e.$target.alpha = 0.5
         // e.$target.$parent.$children[0].$children[0].alpha = 0.5
-        if (e.$target.text) {
-             this.changeImg(e.$target.$parent.$children[0])
-        }
+
+        // if (e.$target.text) {
+        //      this.changeImg(e.$target.$parent.$children[0])
+        // }
+
        // e.$target.text // e.$target.$parent.$x / $y
     //    console.log(e.$target.name);
            
@@ -145,12 +148,18 @@ class Game extends eui.Component {
            case 0:
                 if (Number(value)) {
                     this.tempArr.push(e.$target)
+                    if (e.$target.text) {
+                            this.changeImg(e.$target.$parent.$children[0])
+                    }
                 }
                 break
            case 1:
                 if (Number(value)) {
                     this.tempArr.pop()
                     this.tempArr.push(e.$target)
+                    if (e.$target.text) {
+                        this.changeImg(e.$target.$parent.$children[0])
+                    }
                 } else {
                     this.tempArr.push(value)  
                     this.tempArr[0].touchEnabled = false   
@@ -165,6 +174,9 @@ class Game extends eui.Component {
                         this.tempArr.pop()
                         return
                     } else {
+                        if (e.$target.text) {
+                            this.changeImg(e.$target.$parent.$children[0])
+                        }
                         this.blockAnimation(this.tempArr[0].$parent, this.tempArr[2].$parent)
  
                         //setTimeout 无法接收到事件对象
@@ -278,7 +290,7 @@ class Game extends eui.Component {
 
    //处理错误结果
    private handleFail (e) {
-       e.text = 'X'
+    //    e.text = 'X'
        e.touchEnabled = false
        e.enabled = false
        setTimeout(() => {
@@ -289,6 +301,8 @@ class Game extends eui.Component {
     //成功状态
     private gameX_bgc:eui.Image
     private gameXSuccess(group) {
+        // 防止成功了还在计时
+        this.timeId.stop()
         let instance = new GameSuccess(group.x + group.width / 2 + this.gp_num.x, group.y + group.height / 2 + this.gp_num.y, Number(this.c_score.text) + 1, this.gameX_bgc.width)
         this.addChild(instance)
         setTimeout(() => {
@@ -312,8 +326,8 @@ class Game extends eui.Component {
        egret.Tween.get(element1)
                   .to({
                       x: element2.x,
-                      y: element2.y
-                  }, 300, egret.Ease.circOut)
+                      y: element2.y,
+                  }, 280, egret.Ease.cubicOut)
                   .to({
                       visible: false
                   }, 0)
@@ -328,7 +342,11 @@ class Game extends eui.Component {
            case '+':
              return num1 + num2
            case '-':
-             return num1 - num2
+             if (num1 - num2 >= 0) {
+                 return num1 - num2
+             } else {
+                 return '不支持这种运算'
+             }
            case '*':
              return num1 * num2
            case '/':
@@ -467,6 +485,15 @@ class Game extends eui.Component {
     //结束游戏
     private game_over:eui.Image
     private gameOver () {
+          // 立马更新数据
+        platform.openDataContext.postMessage({
+            score: this.c_game_score.text.toString(),
+            openId: egret.localStorage.getItem('openId'),
+            command: 'updateMaxScore'
+        })
+
+        this.timer.stop()
+        this.timeId.stop()
         this.$parent.addChild(new GameOver(this.c_game_score.text, this))
         this.timeId.stop()
         this.$parent.removeChild(this)

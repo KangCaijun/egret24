@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin width="640" height="1136" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect left="1" right="-1" top="0" bottom="0" fillColor="0x05b2df" anchorOffsetY="0" height="1136"/>
+	<e:Rect left="1" right="-1" top="0" bottom="0" fillColor="0x05b2df" anchorOffsetY="0" height="1136" visible="false"/>
 	<e:Label text="游戏结束" y="188.18" size="80" textAlign="center" verticalAlign="middle" horizontalCenter="0" bold="true"/>
 	<e:Image id="go_home" source="back_png" x="62.06" y="70.15"/>
 	<e:Group width="200" height="64" y="340" anchorOffsetX="0" anchorOffsetY="0" horizontalCenter="0">

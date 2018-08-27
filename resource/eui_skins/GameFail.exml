@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <e:Skin width="640" height="1132" xmlns:e="http://ns.egret.com/eui" xmlns:w="http://ns.egret.com/wing">
-	<e:Rect left="0" right="0" top="0" bottom="0" fillAlpha="0.6"/>
+	<e:Rect id="rect_bg" left="0" right="0" top="0" bottom="0" fillAlpha="0.6" visible="false"/>
 	<e:Image source="fail_bgc_png" width="440" height="440" horizontalCenter="0" verticalCenter="0"/>
-	<e:Label text="继续游戏？" y="422" size="72" textColor="0x515151" textAlign="center" verticalAlign="middle" bold="true" horizontalCenter="0"/>
+	<e:Label text="继续游戏？" y="422" size="72" textColor="0x515151" verticalAlign="middle" bold="true" textAlign="center" x="160"/>
 	<e:Group id="gp_share" width="400" height="108" y="600" anchorOffsetX="0" horizontalCenter="0">
 		<e:Button id="share_btn" label="" top="0" bottom="0" left="0" right="0" width="380">
 			<e:skinName>
@@ -16,6 +16,6 @@
 		<e:Label id="share_label" text="群分享复活" size="50" verticalAlign="middle" textAlign="center" x="88" top="0" bottom="0"/>
 	</e:Group>
 	<e:Image id="game_close_replay" source="close_png" y="800" horizontalCenter="0" width="80" height="80"/>
-	<e:Rect height="160" left="0" right="0" bottom="0" fillColor="0xd8d8d8"/>
-	<e:Label id="game_ad" text="广告" left="0" right="0" bottom="0" height="160" textAlign="center" verticalAlign="middle" size="140" textColor="0x515151" bold="true"/>
+	<e:Rect height="160" left="0" right="0" bottom="0" fillColor="0xd8d8d8" visible="false"/>
+	<e:Label id="game_ad" text="广告" left="0" right="0" bottom="0" height="160" textAlign="center" verticalAlign="middle" size="140" textColor="0x515151" bold="true" visible="false"/>
 </e:Skin>
