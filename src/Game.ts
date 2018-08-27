@@ -492,10 +492,14 @@ class Game extends eui.Component {
             command: 'updateMaxScore'
         })
 
-        this.timer.stop()
+        if (this.timer) {
+            this.timer.stop()            
+        }
+        if (this.timeId) {
         this.timeId.stop()
+        
+        }
         this.$parent.addChild(new GameOver(this.c_game_score.text, this))
-        this.timeId.stop()
         this.$parent.removeChild(this)
     }
 }

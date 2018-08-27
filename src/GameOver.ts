@@ -10,12 +10,6 @@ class GameOver extends eui.Component {
         super()
         this.skinName = 'resource/eui_skins/GameOver.exml'
 
-        platform.openDataContext.postMessage({
-            score: finalScore.toString(),
-            openId: egret.localStorage.getItem('openId'),
-            command: 'updateMaxScore'
-        })
-
         DisUtil.get(this).beCon()
 
         let rect = new egret.Shape()
