@@ -189,39 +189,53 @@ class Game extends eui.Component {
  
                         this.currentEvent = e.$target 
 
-                        let timer:egret.Timer = new egret.Timer(300, 1)
+                        // 动画结束后立马重置数据
+                        let timer:egret.Timer = new egret.Timer(250, 1)
                        
-                        timer.addEventListener(egret.TimerEvent.TIMER, () => {}, this)
+                        // timer.addEventListener(egret.TimerEvent.TIMER, () => {}, this)
                         timer.addEventListener(egret.TimerEvent.TIMER_COMPLETE, function () {
-                            
+
+                            // 重置结果，得出结果，临时保存第二个数字对应的对象，再清除存储数组，成功计算数加1
                             this.tempArr[2].text = result
                             let tempElement = {$target: this.tempArr[2]}
                             this.successNum += 1
                             this.tempArr = []
+
                             if (this.successNum === 3) {
                                 if (result === 24) {
+                                    if (this.timeId) {
+                                          // 防止成功或失败了还在计时
+                                         this.timeId.stop()
+                                    }
                                     
+                                    // 成功后的初始化；分数增加，背景颜色改变，不可点击
                                     this.total_score++
                                     this.currentEvent.$parent.$children[0].$children[0].source = RES.getRes('success_png')
                                     this.currentEvent.touchEnabled = false
                                     this.currentEvent.enabled = false
 
-                                    // TODO 重新开始游戏
+                                    // 重新开始游戏 ============== 判断3 =================
+                                    // 生成新的数组
                                     let tempFourNumArr = this.makeFourNum()
+
                                     if (this.gameName === 'X') {  
                                         setTimeout(() => {
-                                            //TODO :弹出成功对话框
-                                            this.gameXSuccess(this.currentEvent.$parent)
+                                            // 弹出成功界面，执行完动画效果后进入新的界面
+                                            this.gameXSuccess(this.currentEvent.$parent) //弹出成功页面1s
                                             setTimeout(() => {
                                                 this.c_score.text = this.total_score.toString()
                                                 this.c_game_score.text = ((this.total_score - 1) * 100).toString()
                                                 this.replay(tempFourNumArr)
-                                            }, 800)
-                                        }, 500)
-                                    } else {
+                                            }, 500) // 在弹出成功页面的过程中，改变分数和重新开始游戏
+                                        }, 300)  //等待成功的那个按钮的显示 300ms
+                                    } 
+
+
+                                    else {
+                                        // 分数先变后重新开始
+                                        this.c_score.text = this.total_score.toString()
+                                        this.c_game_score.text = ((this.total_score - 1) * 100).toString()
                                         setTimeout(() => {
-                                            this.c_score.text = this.total_score.toString()
-                                            this.c_game_score.text = ((this.total_score - 1) * 100).toString()
                                             this.replay(tempFourNumArr)
                                         }, 500)
                                     }              
@@ -235,56 +249,12 @@ class Game extends eui.Component {
                                     }
                                 }
                             }
+
+                            // 如果此时是属于计算的过程，那么相当于直接点击了第二个数字。
                             this.handleTouch(tempElement)
                             return
                         }, this)
                         timer.start()
-                        
-                        // setTimeout((e) => {
-                        // this.tempArr[2].text = result
-                        // let tempElement = {$target: this.tempArr[2]}
-                        // this.successNum += 1
-                        // this.tempArr = []
-                        // if (this.successNum === 3) {
-                        //     if (result === 24) {
-                        //         this.total_score++
-                        //         e.$parent.$children[0].$children[0].source = RES.getRes('success_png')
-                        //         e.touchEnabled = false
-                        //         e.enabled = false
-
-                        //         // TODO 重新开始游戏
-                        //         let tempFourNumArr = this.makeFourNum()
-                        //         if (this.gameName === 'X') {  
-                        //             setTimeout(() => {
-                        //                 //TODO :弹出成功对话框
-                        //                 this.gameXSuccess(e.$parent)
-                        //                 setTimeout(() => {
-                        //                     this.c_score.text = this.total_score.toString()
-                        //                     this.c_game_score.text = ((this.total_score - 1) * 100).toString()
-                        //                     this.replay(tempFourNumArr)
-                        //                 }, 800)
-                        //             }, 500)
-                        //         } else {
-                        //             setTimeout(() => {
-                        //                  this.c_score.text = this.total_score.toString()
-                        //                  this.c_game_score.text = ((this.total_score - 1) * 100).toString()
-                        //                  this.replay(tempFourNumArr)
-                        //             }, 500)
-                        //         }              
-                        //         //这个return最后需要去掉
-                        //         return
-                        //     } else {
-                        //         if (this.gameName === 'X') {
-                        //             //TODO: 弹出失败对话框  // =================>>>>>>》》》》》》》
-                        //             this.gameXFail()
-                        //         } else {
-                        //             this.handleFail(e)
-                        //         }
-                        //     }
-                        // }
-                        // this.handleTouch(tempElement)
-                        // return
-                        // }, 300, e.$target)
                     }
                 } else {
                     this.tempArr.pop()
@@ -297,7 +267,6 @@ class Game extends eui.Component {
 
    //处理错误结果
    private handleFail (e) {
-    //    e.text = 'X'
        e.touchEnabled = false
        e.enabled = false
        setTimeout(() => {
@@ -308,25 +277,22 @@ class Game extends eui.Component {
     //成功状态
     private gameX_bgc:eui.Image
     private gameXSuccess(group) {
-        // 防止成功了还在计时
-        this.timeId.stop()
         let instance = new GameSuccess(group.x + group.width / 2 + this.gp_num.x, group.y + group.height / 2 + this.gp_num.y, Number(this.c_score.text) + 1, this.gameX_bgc.width)
         this.addChild(instance)
         setTimeout(() => {
             this.removeChild(instance)
             this.timeNumX = 30
             this.timeId.start()
-        }, 1400)
+        }, 1000)
     }   
 
     private failInstance
     private gameXFail() {
-        this.timeId.stop()
         //添加失败页面，并把该页面传过去，以便最后关闭该页面
         this.$parent.addChild(new GameXFail(this))
     }
 
-    // 第一个数字的块运动到第二个数字的块
+    // 第一个数字的块运动到第二个数字的块 
    private blockAnimation(element1, element2) {
        let currentX = element1.x
        let currentY = element1.y
@@ -388,15 +354,34 @@ class Game extends eui.Component {
 
     private makeFourNumArr (num) {
     let s = []
-    if (num >= 50) {
-            /* 生成四个随机数 */
-        for (let i = 0; i < 4; i++) {
-            s.push(Math.floor(Math.random() * 10 + 1))
+    
+    // 不同关卡的数据生成
+    if (num < 10) {
+        let select = [6, 8]
+        for (let i = 0; i < 4; i ++) {
+            s.push(select[parseInt((Math.random() * 4).toString())])
         }
-    } else {
+    } 
+    else if (num < 20) {
+        let select = [4, 6, 8]
+        for (let i = 0; i < 4; i ++) {
+            s.push(select[parseInt((Math.random() * 4).toString())])
+        }
+    }
+    else if (num < 40) {
         let select = [3, 4, 6, 8]
         for (let i = 0; i < 4; i ++) {
             s.push(select[parseInt((Math.random() * 4).toString())])
+        }
+    }
+    else if (num < 80) {
+        for (let i = 0; i < 4; i++) {
+            s.push(Math.floor(Math.random() * 10 + 1))
+        }
+    }
+    else {
+        for (let i = 0; i < 4; i++) {
+            s.push(Math.floor(Math.random() * 13 + 1))
         }
     }
 
@@ -516,9 +501,9 @@ class Game extends eui.Component {
             this.timer.stop()            
         }
         if (this.timeId) {
-        this.timeId.stop()
-        
+            this.timeId.stop()
         }
+        
         this.$parent.addChild(new GameOver(this.c_game_score.text, this))
         this.$parent.removeChild(this)
     }
