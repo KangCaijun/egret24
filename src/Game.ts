@@ -203,8 +203,9 @@ class Game extends eui.Component {
 
                             if (this.successNum === 3) {
                                 if (result === 24) {
+                                    
+                                    // 防止成功或失败了还在计时
                                     if (this.timeId) {
-                                          // 防止成功或失败了还在计时
                                          this.timeId.stop()
                                     }
                                     
@@ -503,7 +504,7 @@ class Game extends eui.Component {
         if (this.timeId) {
             this.timeId.stop()
         }
-        
+
         this.$parent.addChild(new GameOver(this.c_game_score.text, this))
         this.$parent.removeChild(this)
     }

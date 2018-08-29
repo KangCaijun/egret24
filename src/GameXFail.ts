@@ -39,19 +39,18 @@ class GameXFail extends eui.Component {
         this.$parent.removeChild(this)
     }
 
+    // 分享功能，电脑端无法执行回调，只有手机上可见回调
     private share_icon:eui.Image
     private share_label:eui.Label
 
     private handleShare (self) {
         platform.shareAppMessage().then(() => {
-            console.log('success');
-            
-        this.$parent.removeChild(this)
-        self.timeNumX = 30
-        self.timeId.start()
-        self.replay(self.makeFourNum())
+             this.$parent.removeChild(this)
+             self.replay(self.makeFourNum())
+             self.timeNumX = 30
+             self.timeId.start()
         }).catch(() => {
-            console.log('分享失败了啊');
+            console.log('分享失败');
         })
     }
 }

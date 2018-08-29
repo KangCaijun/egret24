@@ -10,8 +10,9 @@ class GameOver extends eui.Component {
         super()
         this.skinName = 'resource/eui_skins/GameOver.exml'
 
+        // 内容show all
         DisUtil.get(this).beCon()
-
+        // 画背景并覆盖
         let rect = new egret.Shape()
         rect.graphics.beginFill(0x05B2DF)
         rect.graphics.drawRect(0, 0, self.$parent.width, self.$parent.height)
@@ -21,11 +22,11 @@ class GameOver extends eui.Component {
 
         this.final_score.text = finalScore
 
+        // 回到首页，再玩一次，分享，排行榜事件监听
         this.go_home.addEventListener(egret.TouchEvent.TOUCH_TAP, this.goHome, this)
         this.new_gameX.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
             this.newGame(self)
         }, this)
-
         this.game_share.addEventListener(egret.TouchEvent.TOUCH_TAP, this.share, this)
         this.total_rank.addEventListener(egret.TouchEvent.TOUCH_TAP, this.showTotalRank, this)
 
@@ -56,12 +57,6 @@ class GameOver extends eui.Component {
     }
 
     private showTotalRank () {
-        // platform.openDataContext.postMessage({
-        //     command: 'close'
-        // })
-        // let _self = this
-        // setTimeout(function() {
           this.$parent.addChild(new ShowRank(this, true))   
-        // }, 1000)
     }
 }
