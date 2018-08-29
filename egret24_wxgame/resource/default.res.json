@@ -1,0 +1,141 @@
+{
+	"groups": [
+		{
+			"keys": "chan_png,homebgc_png,rank_png,xia_png",
+			"name": "home_page"
+		},
+		{
+			"keys": "close_png,share_png,fail_bgc_png",
+			"name": "fail_page"
+		},
+		{
+			"keys": "x_png,time_png,add_png,back_png,chu_png,gamebgc_png,normal_png,pause_png,reduce_png,regame_png,score_png,select_png,success_png",
+			"name": "game_page_x"
+		},
+		{
+			"keys": "gameover_png,regame_png",
+			"name": "voer_page"
+		},
+		{
+			"keys": "close_png,share_png,add_png,back_png,chu_png,gamebgc_png,normal_png,pause_png,reduce_png,regame_png,score_png,select_png,success_png,time_png,x_png,chan_png,homebgc_png,rank_png,xia_png,gameover_png,circle_png",
+			"name": "preload"
+		}
+	],
+	"resources": [
+		{
+			"url": "assets/game_page/add.png",
+			"type": "image",
+			"name": "add_png"
+		},
+		{
+			"url": "assets/game_page/back.png",
+			"type": "image",
+			"name": "back_png"
+		},
+		{
+			"url": "assets/game_page/chu.png",
+			"type": "image",
+			"name": "chu_png"
+		},
+		{
+			"url": "assets/game_page/gamebgc.png",
+			"type": "image",
+			"name": "gamebgc_png"
+		},
+		{
+			"url": "assets/game_page/normal.png",
+			"type": "image",
+			"name": "normal_png"
+		},
+		{
+			"url": "assets/game_page/pause.png",
+			"type": "image",
+			"name": "pause_png"
+		},
+		{
+			"url": "assets/game_page/reduce.png",
+			"type": "image",
+			"name": "reduce_png"
+		},
+		{
+			"url": "assets/game_page/regame.png",
+			"type": "image",
+			"name": "regame_png"
+		},
+		{
+			"url": "assets/game_page/score.png",
+			"type": "image",
+			"name": "score_png"
+		},
+		{
+			"url": "assets/game_page/select.png",
+			"type": "image",
+			"name": "select_png"
+		},
+		{
+			"url": "assets/game_page/success.png",
+			"type": "image",
+			"name": "success_png"
+		},
+		{
+			"url": "assets/game_page/time.png",
+			"type": "image",
+			"name": "time_png"
+		},
+		{
+			"url": "assets/game_page/x.png",
+			"type": "image",
+			"name": "x_png"
+		},
+		{
+			"url": "assets/home_page/chan.png",
+			"type": "image",
+			"name": "chan_png"
+		},
+		{
+			"url": "assets/home_page/homebgc.png",
+			"type": "image",
+			"name": "homebgc_png"
+		},
+		{
+			"url": "assets/home_page/rank.png",
+			"type": "image",
+			"name": "rank_png"
+		},
+		{
+			"url": "assets/home_page/xia.png",
+			"type": "image",
+			"name": "xia_png"
+		},
+		{
+			"url": "assets/fail_page/close.png",
+			"type": "image",
+			"name": "close_png"
+		},
+		{
+			"url": "assets/fail_page/share.png",
+			"type": "image",
+			"name": "share_png"
+		},
+		{
+			"url": "assets/over_page/gameover.png",
+			"type": "image",
+			"name": "gameover_png"
+		},
+		{
+			"url": "assets/over_page/restartgame.png",
+			"type": "image",
+			"name": "restartgame_png"
+		},
+		{
+			"url": "assets/fail_page/fail_bgc.png",
+			"type": "image",
+			"name": "fail_bgc_png"
+		},
+		{
+			"url": "assets/circle.png",
+			"type": "image",
+			"name": "circle_png"
+		}
+	]
+}

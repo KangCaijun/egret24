@@ -202,13 +202,13 @@ class Game extends eui.Component {
                             this.tempArr = []
 
                             if (this.successNum === 3) {
+                               // 防止成功或失败了还在计时
+                                if (this.timeId) {
+                                     this.timeId.stop()
+                                }
+                                    
                                 if (result === 24) {
-                                    
-                                    // 防止成功或失败了还在计时
-                                    if (this.timeId) {
-                                         this.timeId.stop()
-                                    }
-                                    
+  
                                     // 成功后的初始化；分数增加，背景颜色改变，不可点击
                                     this.total_score++
                                     this.currentEvent.$parent.$children[0].$children[0].source = RES.getRes('success_png')
@@ -316,11 +316,9 @@ class Game extends eui.Component {
    private calResult (num1, symbol, num2) {
        switch (symbol) {
            case '+':
-           console.log('jai')
              return num1 + num2
            case '-':
              if (num1 - num2 >= 0) {
-                 console.log('jian')
                  return num1 - num2
              } else {
                  return '不支持这种运算'
@@ -328,7 +326,6 @@ class Game extends eui.Component {
            case '*':
              return num1 * num2
            case '/':
-           console.log('chu')
              if (num2 !== 0 && num1 % num2 === 0) {
                  return num1 / num2
              } else {
@@ -358,19 +355,19 @@ class Game extends eui.Component {
     
     // 不同关卡的数据生成
     if (num < 10) {
-        let select = [6, 8]
+        let select = [4, 6, 8]
         for (let i = 0; i < 4; i ++) {
             s.push(select[parseInt((Math.random() * 4).toString())])
         }
     } 
     else if (num < 20) {
-        let select = [4, 6, 8]
+        let select = [2, 4, 6, 8]
         for (let i = 0; i < 4; i ++) {
             s.push(select[parseInt((Math.random() * 4).toString())])
         }
     }
     else if (num < 40) {
-        let select = [3, 4, 6, 8]
+        let select = [2, 3, 4, 6, 8]
         for (let i = 0; i < 4; i ++) {
             s.push(select[parseInt((Math.random() * 4).toString())])
         }
