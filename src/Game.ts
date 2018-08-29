@@ -5,11 +5,16 @@ class Game extends eui.Component {
     private c_game_score:eui.Label
     private home_bg:egret.Bitmap
 
+    /**
+     * name: 取值为 'X' ==>   侠模式
+     *          'C'  ==> 禅模式
+     */
     public constructor (name:string) {
         super()
         this.gameName = name
 
-        // 引入贴图            ======================判断1============
+        // 引入贴图        ===================== 判断1 ============
+        // 设置定时器，计算总的时间 =================判断2===================
         if (this.gameName === 'C') {
             this.skinName = "resource/eui_skins/GameC.exml"
             this.setTimeC()
@@ -20,7 +25,7 @@ class Game extends eui.Component {
             // this.gameXSuccess(this.gp_num.$children[1])
         }
 
-        // 适配屏幕
+        // 适配屏幕 == 中间show all，背景覆盖
         this.home_bg = new egret.Bitmap()
         this.home_bg.texture = RES.getRes('gamebgc_png')
         
@@ -28,25 +33,22 @@ class Game extends eui.Component {
         DisUtil.get(this).beCon()
         DisUtil.get(this.home_bg).cover()
 
-        // 设置定时器，计算总的时间 =================判断2===================
-
-        // //this.setTime()
-
-        //生成4个数，用于计算
+        //监听数字被点击事件
         for (let i = 0; i < this.gp_num.$children.length; i++) {
             this.gp_num.$children[i].addEventListener(egret.TouchEvent.TOUCH_TAP, this.handleTouch, this, true)
         }
+        // 监听符号被点击事件
         for (let j = 0; j < this.gp_symbol.$children.length; j++) {
             this.gp_symbol.$children[j].addEventListener(egret.TouchEvent.TOUCH_TAP, this.handleTouch, this, true)
         }
         this.initFourText(this.makeFourNum())
 
-        //重新开始游戏
+        //监听事件：刷新：重新开始游戏 === 关卡不变
         this.c_replay.addEventListener(egret.TouchEvent.TOUCH_TAP, () => {
             this.replay(JSON.parse(egret.localStorage.getItem('localFourNum')))
         }, this)
 
-        //结束游戏
+        //监听事件：结束游戏
         this.game_over.addEventListener(egret.TouchEvent.TOUCH_TAP, this.gameOver, this)
     }
 // =======================================================
@@ -54,6 +56,7 @@ class Game extends eui.Component {
     private c_game_time:eui.Label
     private timeNum = 0
     private timer
+    // 禅模式计时
     private setTimeC() {
         this.timer = new egret.Timer(1000, 0)
         this.timer.addEventListener(egret.TimerEvent.TIMER, this.timerFuncC, this)
@@ -61,6 +64,9 @@ class Game extends eui.Component {
         this.timer.start()
     }
 
+    /**
+     * 将秒数转化成分秒显示
+     */
     private timerFuncC () {
         this.timeNum += 1
         let tempMinute = Math.floor(this.timeNum / 60)
@@ -72,11 +78,11 @@ class Game extends eui.Component {
     private timerComFuncC () {
     }
 
+    // 侠模式计时
     private timeNumX = 30
-    private timeId
+    private timeId:egret.Timer
     private setTimeX () {
-        let timeId:egret.Timer = new egret.Timer(1000, 0)
-        this.timeId = timeId
+        this.timeId = new egret.Timer(1000, 0)
         this.timeId.addEventListener(egret.TimerEvent.TIMER, this.reduceTime, this)
         this.timeId.addEventListener(egret.TimerEvent.TIMER_COMPLETE, this.timerComFuncC, this)
         this.timeId.start()
@@ -86,10 +92,11 @@ class Game extends eui.Component {
         this.c_game_time.text = this.timeNumX.toString() + 's'
         if (this.timeNumX === 0) {
             this.timeId.stop()
-                //TODO: 弹出失败对话框，是否继续===============================》》》》》》》》》
+                //TODO: 弹出失败对话框，是否继续
             this.gameXFail()
         }
     }
+
 // =============================================================
     // 四个块的显示 和 文本数字
     private gp_num:eui.Group
@@ -97,7 +104,9 @@ class Game extends eui.Component {
     private label2:eui.Label
     private label3:eui.Label
     private label4:eui.Label
-    // 文本初始化
+
+    // 文本初始化：将生成的四个数字放入到块中
+    // 本地保存四个数，便于刷新时使用
     private initFourText (fourNumArr) {
         egret.localStorage.setItem('localFourNum', JSON.stringify(fourNumArr))
         this.label1.text = fourNumArr[0]
@@ -106,7 +115,7 @@ class Game extends eui.Component {
         this.label4.text = fourNumArr[3]
     }
 
-    //按钮初始化 + 文本点击开启
+    //按钮初始化：按钮背景颜色普通，可点击，可见
     private btn1:eui.Button
     private btn2:eui.Button
     private btn3:eui.Button
@@ -122,64 +131,62 @@ class Game extends eui.Component {
     }
 
     // 计算逻辑
-    private tempArr = []
+    private tempArr = []    //存放被点击的数字或自负
     private gp_symbol:eui.Group
-    private successNum:number = 0
-    private total_score:number = 1
-    private currentEvent 
+    private successNum:number = 0   //计算的次数，等于3的时候游戏结束
+    private total_score:number = 1  //获取的分数
+    private currentEvent  //在setTimeout等延迟执行的函数中无法获取当前的事件对象
+            // ======== 因此将事件对象挂在到这个界面对象上。
 
+    // 当数字或者是符号被点击的时候，处理相关逻辑
     private handleTouch (e) {
+        // 用户获取当前被点击对象的值
         let value = e.$target.text || e.$target.name  
         
-        if (value) {
-        // e.$target.touchEnabled = false
-        // e.$target.enabled = false
-        // e.$target.alpha = 0.5
-        // e.$target.$parent.$children[0].$children[0].alpha = 0.5
+        // 只有当值存在的时候才执行计算逻辑
+        if (value || value === 0) {
+         switch (this.tempArr.length) {
 
-        // if (e.$target.text) {
-        //      this.changeImg(e.$target.$parent.$children[0])
-        // }
-
-       // e.$target.text // e.$target.$parent.$x / $y
-    //    console.log(e.$target.name);
-           
-       switch (this.tempArr.length) {
+            //  数组的第一个必须为数字，数组长度加1，改变背景颜色
            case 0:
-                if (Number(value)) {
+                if (Number(value) || Number(value) === 0) {
                     this.tempArr.push(e.$target)
-                    if (e.$target.text) {
-                            this.changeImg(e.$target.$parent.$children[0])
-                    }
+                    this.changeImg(e.$target.$parent.$children[0])
                 }
                 break
+
+            // 数组的第二个必须为符号，
+            // 如果为数字，将第一个数字去除掉，将当前数字存储，并使用排他功能改变颜色
+            // 如果是字符，将字符添加到数组，并是的第一个数字不能被点击
            case 1:
-                if (Number(value)) {
+                if (Number(value) || Number(value) === 0) {
                     this.tempArr.pop()
                     this.tempArr.push(e.$target)
-                    if (e.$target.text) {
-                        this.changeImg(e.$target.$parent.$children[0])
-                    }
+                    this.changeImg(e.$target.$parent.$children[0])
                 } else {
                     this.tempArr.push(value)  
                     this.tempArr[0].touchEnabled = false   
                     this.tempArr[0].enabled = false               
                 }
                 break
+
+            // 数组的第三个必须是数字
+            // 如果不是数字，将前一个符号移除，添加新的符号
+            // 如果是数字，添加数字，计算结果
+                // 如果结果中为负值或者是小数，则不支持这种运算，将数字移除
+                // 如果能计算出结果，改变背景颜色，并执行动画函数
+
            case 2:
-                if (Number(value)) {
+                if (Number(value) || Number(value) === 0) {
                     this.tempArr.push(e.$target)
                     let result = this.calResult(Number(this.tempArr[0].text), this.tempArr[1], Number(this.tempArr[2].text))
                     if (result === '不支持这种运算') {
                         this.tempArr.pop()
                         return
                     } else {
-                        if (e.$target.text) {
-                            this.changeImg(e.$target.$parent.$children[0])
-                        }
+                        this.changeImg(e.$target.$parent.$children[0])
                         this.blockAnimation(this.tempArr[0].$parent, this.tempArr[2].$parent)
  
-                        //setTimeout 无法接收到事件对象
                         this.currentEvent = e.$target 
 
                         let timer:egret.Timer = new egret.Timer(300, 1)
@@ -319,15 +326,17 @@ class Game extends eui.Component {
         this.$parent.addChild(new GameXFail(this))
     }
 
+    // 第一个数字的块运动到第二个数字的块
    private blockAnimation(element1, element2) {
        let currentX = element1.x
        let currentY = element1.y
        
+        //移动过去后立马不可见并回到原位置待命
        egret.Tween.get(element1)
                   .to({
                       x: element2.x,
                       y: element2.y,
-                  }, 280, egret.Ease.cubicOut)
+                  }, 240, egret.Ease.cubicOut)
                   .to({
                       visible: false
                   }, 0)
@@ -340,9 +349,11 @@ class Game extends eui.Component {
    private calResult (num1, symbol, num2) {
        switch (symbol) {
            case '+':
+           console.log('jai')
              return num1 + num2
            case '-':
              if (num1 - num2 >= 0) {
+                 console.log('jian')
                  return num1 - num2
              } else {
                  return '不支持这种运算'
@@ -350,6 +361,7 @@ class Game extends eui.Component {
            case '*':
              return num1 * num2
            case '/':
+           console.log('chu')
              if (num2 !== 0 && num1 % num2 === 0) {
                  return num1 / num2
              } else {
@@ -367,18 +379,25 @@ class Game extends eui.Component {
 
     /* 生成四个符合计算要求的随机数 */
     private makeFourNum () {
-        let tempArr = this.makeFourNumArr()
+        let tempArr = this.makeFourNumArr(Number(this.c_score.text) )
         while (!tempArr) {
-            tempArr = this.makeFourNumArr()
+            tempArr = this.makeFourNumArr(Number(this.c_score.text) )
         }
         return tempArr
     }
 
-    private makeFourNumArr () {
-    /* 生成四个随机数 */
+    private makeFourNumArr (num) {
     let s = []
-    for (let i = 0; i < 4; i++) {
-        s.push(Math.floor(Math.random() * 10 + 1))
+    if (num >= 50) {
+            /* 生成四个随机数 */
+        for (let i = 0; i < 4; i++) {
+            s.push(Math.floor(Math.random() * 10 + 1))
+        }
+    } else {
+        let select = [3, 4, 6, 8]
+        for (let i = 0; i < 4; i ++) {
+            s.push(select[parseInt((Math.random() * 4).toString())])
+        }
     }
 
     /* 存储符号 */
@@ -477,6 +496,7 @@ class Game extends eui.Component {
 //==========================================
     //重置功能
     private replay (initFourNumArr) {
+       this.tempArr.length = 0
        this.successNum = 0
        this.initFourText(initFourNumArr)
        this.initFourButton(this.gp_num)

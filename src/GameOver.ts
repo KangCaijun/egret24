@@ -56,12 +56,12 @@ class GameOver extends eui.Component {
     }
 
     private showTotalRank () {
-        platform.openDataContext.postMessage({
-            command: 'close'
-        })
-        let _self = this
-        setTimeout(function() {
-          _self.$parent.addChild(new ShowRank(_self, true))   
-        }, 1000)
+        // platform.openDataContext.postMessage({
+        //     command: 'close'
+        // })
+        // let _self = this
+        // setTimeout(function() {
+          this.$parent.addChild(new ShowRank(this, true))   
+        // }, 1000)
     }
 }

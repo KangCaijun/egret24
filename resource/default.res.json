@@ -17,7 +17,7 @@
 			"name": "voer_page"
 		},
 		{
-			"keys": "close_png,share_png,add_png,back_png,chu_png,gamebgc_png,normal_png,pause_png,reduce_png,regame_png,score_png,select_png,success_png,time_png,x_png,chan_png,homebgc_png,rank_png,xia_png,gameover_png",
+			"keys": "close_png,share_png,add_png,back_png,chu_png,gamebgc_png,normal_png,pause_png,reduce_png,regame_png,score_png,select_png,success_png,time_png,x_png,chan_png,homebgc_png,rank_png,xia_png,gameover_png,circle_png",
 			"name": "preload"
 		}
 	],
@@ -131,6 +131,11 @@
 			"url": "assets/fail_page/fail_bgc.png",
 			"type": "image",
 			"name": "fail_bgc_png"
+		},
+		{
+			"url": "assets/circle.png",
+			"type": "image",
+			"name": "circle_png"
 		}
 	]
 }
